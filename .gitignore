@@ -1,0 +1,8 @@
+data/
+.venv/
+packages/
+result/
+solr-8.11.1/
+*.html
+*.db
+*.tgz
