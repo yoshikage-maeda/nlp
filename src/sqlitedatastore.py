@@ -48,3 +48,18 @@ def get_all_ids(limit, offset=0):
     return [record[0] for record in 
         conn.execute(
             'SELECT id FROM docs LIMIT ? OFFSET ?', (limit, offset))]
+
+def set_annotation(doc_id, name, value):
+    conn.execute(
+        'UPDATE docs SET {0} = ? where id = ?'.format(name), (json.dumps(value), doc_id)
+    )
+    conn.commit()
+
+
+def get_annotation(doc_id, name):
+    row = conn.execute('SELECT {0} FROM docs WHERE id = ?'.format(name), (doc_id,)).fetchone()
+
+    if row[0] is not None:
+        return json.loads(row[0])
+    else:
+        return []
